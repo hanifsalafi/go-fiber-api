@@ -1,13 +1,17 @@
 package response
 
+import "time"
+
 type UserProfileResponse struct {
-	ID          uint   `json:"id" validate:"required"`
-	Username    string `json:"username" validate:"required"`
-	Email       string `json:"email" validate:"required,email"`
-	Password    string `json:"password" validate:"required,min=6"`
-	Fullname    string `json:"fullname" validate:"required"`
-	Address     string `json:"address" validate:"required"`
-	PhoneNumber string `json:"phone_number" validate:"required"`
-	UserRoleID  int    `json:"user_role_id" validate:"required,numeric"`
-	StatusID    int    `json:"status_id" validate:"required,numeric"`
+	ID          uint      `json:"id"`
+	Username    string    `json:"username"`
+	Email       string    `json:"email"`
+	Password    string    `json:"password"`
+	Fullname    string    `json:"fullname"`
+	Address     string    `json:"address"`
+	PhoneNumber string    `json:"phone_number"`
+	UserRoleID  int       `json:"user_role_id"`
+	StatusID    int       `json:"status_id"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }

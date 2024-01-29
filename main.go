@@ -13,6 +13,7 @@ func main() {
 	//migration.RunMigration()
 
 	app := fiber.New()
+
 	// INITIAL ROUTE
 	route.MainRouteInit(app)
 	route.UserRouteInit(app)

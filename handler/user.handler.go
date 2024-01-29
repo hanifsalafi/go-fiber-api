@@ -7,7 +7,7 @@ import (
 	"go-fiber-api/model/mapper"
 	req "go-fiber-api/model/request"
 	res "go-fiber-api/model/response"
-	"go-fiber-api/model/validator"
+	"go-fiber-api/utils"
 	"log"
 )
 
@@ -27,8 +27,8 @@ func UserCreate(ctx *fiber.Ctx) error {
 		return err
 	}
 
-	// Validate request
-	if err := validator.ValidateUserRequest(user); err != nil {
+	// Validate Request
+	if err := validator.ValidateRequest(user); err != nil {
 		returnData := res.ReturnData{
 			Success: false,
 			Data:    err.Error(),
@@ -37,6 +37,7 @@ func UserCreate(ctx *fiber.Ctx) error {
 		return ctx.Status(400).JSON(returnData)
 	}
 
+	// Save Model
 	newUser := e.UserProfile{
 		Username:    user.Username,
 		Email:       user.Email,
@@ -61,7 +62,7 @@ func UserCreate(ctx *fiber.Ctx) error {
 
 	userResponse := result.Statement.Model.(*e.UserProfile)
 
-	//
+	// Mapping Response
 	resultResponse := mapper.UserProfileResponseMapper(userResponse)
 
 	returnData := res.ReturnData{

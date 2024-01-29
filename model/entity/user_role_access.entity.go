@@ -10,6 +10,7 @@ type UserRoleAccess struct {
 	IsInsertEnabled bool      `json:"is_insert_enabled" gorm:"default:false"`
 	IsUpdateEnabled bool      `json:"is_update_enabled" gorm:"default:false"`
 	IsDeleteEnabled bool      `json:"is_delete_enabled" gorm:"default:false"`
+	IsAdminEnabled  bool      `json:"is_admin_enabled" gorm:"default:false"`
 	IsActive        bool      `json:"is_active" gorm:"default:true"`
 	CreatedAt       time.Time `json:"created_at" gorm:"default:now()"`
 	UpdatedAt       time.Time `json:"updated_at" gorm:"default:now()"`

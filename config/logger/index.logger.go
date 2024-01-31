@@ -6,6 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"go-fiber-api/config/config"
 	"os"
+	"time"
 )
 
 // NewLogger : initialize logger
@@ -28,4 +29,24 @@ func (h PreforkHook) Run(e *zerolog.Event, level zerolog.Level, msg string) {
 	if fiber.IsChild() {
 		e.Discard()
 	}
+}
+
+type StringerFunc func() string
+
+func (f StringerFunc) String() string {
+	return f()
+}
+
+func InitLogger() zerolog.Logger {
+	logFile, _ := os.OpenFile(
+		"myapp.log",
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+		0664,
+	)
+
+	multi := zerolog.MultiLevelWriter(os.Stdout, logFile)
+	return zerolog.New(multi).With().Stringer(zerolog.TimestampFieldName,
+		StringerFunc(func() string {
+			return time.Now().Format(time.RFC3339)
+		})).Str("service", "UserService").Logger()
 }

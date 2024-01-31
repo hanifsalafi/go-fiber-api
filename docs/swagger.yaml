@@ -7,19 +7,12 @@ definitions:
       messages:
         items: {}
         type: array
+      meta: {}
+      success:
+        type: boolean
     type: object
-host: localhost:8080
 info:
-  contact:
-    email: bangadam.dev@gmail.com
-    name: Developer
-  description: This is a sample API documentation.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Go Fiber Starter API Documentation
-  version: "1.0"
+  contact: {}
 paths:
   /articles:
     get:
@@ -181,13 +174,4 @@ paths:
       summary: update article
       tags:
       - Task
-schemes:
-- http
-- https
-securityDefinitions:
-  Bearer:
-    description: '"Type ''Bearer {TOKEN}'' to correctly set the API Key"'
-    in: header
-    name: Authorization
-    type: apiKey
 swagger: "2.0"

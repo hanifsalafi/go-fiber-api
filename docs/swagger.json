@@ -1,24 +1,8 @@
 {
-    "schemes": [
-        "http",
-        "https"
-    ],
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample API documentation.",
-        "title": "Go Fiber Starter API Documentation",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "name": "Developer",
-            "email": "bangadam.dev@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0"
+        "contact": {}
     },
-    "host": "localhost:8080",
     "paths": {
         "/articles": {
             "get": {
@@ -283,16 +267,12 @@
                 "messages": {
                     "type": "array",
                     "items": {}
+                },
+                "meta": {},
+                "success": {
+                    "type": "boolean"
                 }
             }
-        }
-    },
-    "securityDefinitions": {
-        "Bearer": {
-            "description": "\"Type 'Bearer {TOKEN}' to correctly set the API Key\"",
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
         }
     }
 }

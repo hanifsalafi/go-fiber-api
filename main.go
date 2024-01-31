@@ -4,6 +4,7 @@ import (
 	fxzerolog "github.com/efectn/fx-zerolog"
 	"go-fiber-api/app/database"
 	"go-fiber-api/app/middleware"
+	"go-fiber-api/app/module/user"
 	"go-fiber-api/app/router"
 	main2 "go-fiber-api/config/config"
 	"go-fiber-api/config/logger"
@@ -29,8 +30,7 @@ func main() {
 		fx.Provide(router.NewRouter),
 
 		// provide modules
-		//article.NewArticleModule,
-		//auth.NewAuthModule,
+		user.NewUserModule,
 
 		// start aplication
 		fx.Invoke(webserver.Start),
@@ -38,19 +38,4 @@ func main() {
 		// define logger
 		fx.WithLogger(fxzerolog.Init()),
 	).Run()
-
-	//// INITIAL DATABASE
-	//database.DatabaseInit()
-	////migration.RunMigration()
-	//
-	//app := fiber.New()
-	//
-	//// INITIAL ROUTE
-	//route.MainRouteInit(app)
-	//route.UserRouteInit(app)
-	//
-	//err := app.Listen(":8800")
-	//if err != nil {
-	//	return
-	//}
 }

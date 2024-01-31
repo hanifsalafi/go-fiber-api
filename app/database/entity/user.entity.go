@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type UserProfile struct {
+type User struct {
 	ID                 uint      `json:"id" gorm:"primaryKey;type:int4;autoIncrement"`
 	Username           string    `json:"username" gorm:"type:varchar"`
 	Email              string    `json:"email" gorm:"type:varchar"`

@@ -1,7 +1,7 @@
 package seeds
 
 import (
-	"go-fiber-api/app/model/entity"
+	"go-fiber-api/app/database/entity"
 	"gorm.io/gorm"
 )
 

@@ -2,6 +2,8 @@ package router
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/swagger"
+	"go-fiber-api/app/module/user"
 	"go-fiber-api/config/config"
 )
 
@@ -9,22 +11,19 @@ type Router struct {
 	App fiber.Router
 	Cfg *config.Config
 
-	//ArticleRouter *article.ArticleRouter
-	//AuthRouter    *auth.AuthRouter
+	UserRouter *user.UserRouter
 }
 
 func NewRouter(
 	fiber *fiber.App,
 	cfg *config.Config,
 
-	// articleRouter *article.ArticleRouter,
-	// authRouter *auth.AuthRouter,
+	userRouter *user.UserRouter,
 ) *Router {
 	return &Router{
-		App: fiber,
-		Cfg: cfg,
-		//ArticleRouter: articleRouter,
-		//AuthRouter:    authRouter,
+		App:        fiber,
+		Cfg:        cfg,
+		UserRouter: userRouter,
 	}
 }
 
@@ -35,10 +34,10 @@ func (r *Router) Register() {
 		return c.SendString("Pong! 👋")
 	})
 
-	// Swagger Documentation
-	//r.App.Get("/swagger/*", swagger.HandlerDefault)
+	//Swagger Documentation
+	r.App.Get("/swagger/*", swagger.HandlerDefault)
 
 	// Register routes of modules
-	//r.ArticleRouter.RegisterArticleRoutes()
+	r.UserRouter.RegisterUserRoutes()
 	//r.AuthRouter.RegisterAuthRoutes()
 }

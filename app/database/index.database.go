@@ -2,13 +2,13 @@ package database
 
 import (
 	"github.com/rs/zerolog"
-	"go-fiber-api/app/model/entity"
+	"go-fiber-api/app/database/entity"
 	"go-fiber-api/config/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-// setup database with gorm
+// Database setup database with gorm
 type Database struct {
 	DB  *gorm.DB
 	Log zerolog.Logger
@@ -29,7 +29,7 @@ func NewDatabase(cfg *config.Config, log zerolog.Logger) *Database {
 	return db
 }
 
-// connect database
+// ConnectDatabase connect database
 func (_db *Database) ConnectDatabase() {
 	conn, err := gorm.Open(postgres.Open(_db.Cfg.DB.Postgres.DSN), &gorm.Config{})
 	if err != nil {
@@ -41,7 +41,7 @@ func (_db *Database) ConnectDatabase() {
 	_db.DB = conn
 }
 
-// shutdown database
+// ShutdownDatabase shutdown database
 func (_db *Database) ShutdownDatabase() {
 	sqlDB, err := _db.DB.DB()
 	if err != nil {
@@ -52,7 +52,7 @@ func (_db *Database) ShutdownDatabase() {
 	sqlDB.Close()
 }
 
-// migrate models
+// MigrateModels migrate models
 func (_db *Database) MigrateModels() {
 	err := _db.DB.AutoMigrate(
 		Models()...,
@@ -64,14 +64,17 @@ func (_db *Database) MigrateModels() {
 	}
 }
 
-// list of models for migration
+// Models list of models for migration
 func Models() []interface{} {
 	return []interface{}{
 		entity.MasterStatus{},
+		entity.User{},
+		entity.UserRole{},
+		entity.UserRoleAccess{},
 	}
 }
 
-// seed data
+// SeedModels seed data
 func (_db *Database) SeedModels(seeder []Seeder) {
 	for _, seed := range seeder {
 		count, err := seed.Count(_db.DB)

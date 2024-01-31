@@ -13,16 +13,16 @@ import (
 var (
 	validate *validator.Validate
 	uni      *ut.UniversalTranslator
-	trans    ut.Translator
+	Trans    ut.Translator
 )
 
 func init() {
 	validate = validator.New()
 
 	uni = ut.New(en.New())
-	trans, _ = uni.GetTranslator("en")
+	Trans, _ = uni.GetTranslator("en")
 
-	if err := ent.RegisterDefaultTranslations(validate, trans); err != nil && !fiber.IsChild() {
+	if err := ent.RegisterDefaultTranslations(validate, Trans); err != nil && !fiber.IsChild() {
 		log.Panic().Err(err).Msg("")
 	}
 }
@@ -44,11 +44,17 @@ func ParseAndValidate(c *fiber.Ctx, body any) error {
 
 	switch v.Kind() {
 	case reflect.Ptr:
-		ParseBody(c, body)
+		err := ParseBody(c, body)
+		if err != nil {
+			return err
+		}
 
 		return ValidateStruct(v.Elem().Interface())
 	case reflect.Struct:
-		ParseBody(c, &body)
+		err := ParseBody(c, &body)
+		if err != nil {
+			return err
+		}
 
 		return ValidateStruct(v)
 	default:

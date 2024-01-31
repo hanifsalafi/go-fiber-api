@@ -2,19 +2,20 @@ package response
 
 import (
 	"fmt"
-	"github.com/go-playground/validator/v10"
-	"strings"
-
+	validator "github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog/log"
+	val "go-fiber-api/utils/validator"
+	"strings"
 )
 
 // Alias for any slice
 type Messages = []any
 
 type Error struct {
-	Code    int `json:"code"`
-	Message any `json:"message"`
+	Success bool `json:"success"`
+	Code    int  `json:"code"`
+	Message any  `json:"message"`
 }
 
 // error makes it compatible with the error interface
@@ -24,7 +25,7 @@ func (e *Error) Error() string {
 
 // A struct to return normal response
 type Response struct {
-	Success  bool     `json:"status"`
+	Success  bool     `json:"success"`
 	Code     int      `json:"code"`
 	Messages Messages `json:"messages"`
 	Data     any      `json:"data,omitempty"`
@@ -43,7 +44,7 @@ var ErrorHandler = func(c *fiber.Ctx, err error) error {
 	// handle errors
 	if c, ok := err.(validator.ValidationErrors); ok {
 		resp.Code = fiber.StatusUnprocessableEntity
-		resp.Messages = Messages{removeTopStruct(c.Translate(trans))}
+		resp.Messages = Messages{removeTopStruct(c.Translate(val.Trans))}
 	} else if c, ok := err.(*fiber.Error); ok {
 		resp.Code = c.Code
 		resp.Messages = Messages{c.Message}

@@ -5,7 +5,7 @@ import (
 	res "go-fiber-api/model/response"
 )
 
-func UserProfileResponseMapper(user *e.UserProfile) res.UserProfileResponse {
+func UserProfileResponseMapper(user e.UserProfile) res.UserProfileResponse {
 	userProfile := res.UserProfileResponse{
 		ID:          user.ID,
 		Username:    user.Username,
@@ -15,6 +15,8 @@ func UserProfileResponseMapper(user *e.UserProfile) res.UserProfileResponse {
 		PhoneNumber: user.PhoneNumber,
 		UserRoleID:  user.UserRoleID,
 		StatusID:    user.StatusID,
+		CreatedAt:   user.CreatedAt,
+		UpdatedAt:   user.UpdatedAt,
 	}
 	return userProfile
 }

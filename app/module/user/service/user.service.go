@@ -6,8 +6,8 @@ import (
 	"go-fiber-api/app/module/user/repository"
 	"go-fiber-api/app/module/user/request"
 	"go-fiber-api/app/module/user/response"
-	"go-fiber-api/config/logger"
 	"go-fiber-api/utils/paginator"
+	"time"
 )
 
 // UserService
@@ -28,9 +28,7 @@ type UserService interface {
 }
 
 // NewArticleService init ArticleService
-func NewArticleService(repo repository.UserRepository) UserService {
-
-	log := logger.InitLogger()
+func NewArticleService(repo repository.UserRepository, log zerolog.Logger) UserService {
 
 	return &userService{
 		Repo: repo,
@@ -49,7 +47,9 @@ func (_i *userService) All(req request.UserQueryRequest) (users []*response.User
 		users = append(users, mapper.UserResponseMapper(result))
 	}
 
-	_i.Log.Info().Interface("data", results).Msg("")
+	_i.Log.Info().Str("timestamp", time.Now().
+		Format(time.RFC3339)).Str("Service:Resource", "User:All").
+		Interface("data", users).Msg("")
 
 	return
 }
@@ -60,7 +60,9 @@ func (_i *userService) Show(id uint) (user *response.UserResponse, err error) {
 		return nil, err
 	}
 
-	_i.Log.Info().Interface("data", result).Msg("")
+	_i.Log.Info().Str("timestamp", time.Now().
+		Format(time.RFC3339)).Str("Service:Resource", "User:Show").
+		Interface("data", result).Msg("")
 
 	return mapper.UserResponseMapper(result), nil
 }
